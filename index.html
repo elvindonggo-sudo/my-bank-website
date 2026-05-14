@@ -1,12 +1,2274 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Bank Website</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EAR Bank — Your Trusted Financial Partner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #122040;
+    --navy-light: #1a3055;
+    --gold: #c9a84c;
+    --gold-light: #e2c07a;
+    --gold-pale: #f7f0e0;
+    --white: #ffffff;
+    --off-white: #f9f7f3;
+    --text-dark: #1a1a2e;
+    --text-mid: #4a5568;
+    --text-muted: #8a96a8;
+    --border: rgba(201,168,76,0.18);
+    --sidebar-w: 260px;
+    --transition: 0.25s ease;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text-dark);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ────────────────────────────────────── */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--navy);
+    position: fixed;
+    left: 0; top: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    border-right: 1px solid rgba(201,168,76,0.12);
+  }
+
+  .sidebar-logo {
+    padding: 2rem 1.5rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .logo-mark {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--gold);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  .logo-tagline {
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .sidebar-nav {
+    padding: 1.5rem 0;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .nav-section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    padding: 0.75rem 1.5rem 0.4rem;
+    font-weight: 500;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1.5rem;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all var(--transition);
+    font-size: 0.88rem;
+    font-weight: 400;
+    border-left: 3px solid transparent;
+    text-decoration: none;
+  }
+
+  .nav-item:hover {
+    color: var(--white);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .nav-item.active {
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    border-left-color: var(--gold);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.8;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .cta-btn {
+    display: block;
+    background: var(--gold);
+    color: var(--navy);
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background var(--transition);
+    border: none;
+    width: 100%;
+    text-decoration: none;
+  }
+
+  .cta-btn:hover { background: var(--gold-light); }
+
+  /* ── MAIN CONTENT ───────────────────────────────── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ────────────────────────────────────── */
+  .topbar {
+    background: var(--white);
+    padding: 0 2.5rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .topbar-left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .page-crumb {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .hotline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .hotline-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hotline-num {
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── PAGE SECTIONS ──────────────────────────────── */
+  .page-section {
+    display: none;
+    animation: fadeIn 0.35s ease;
+  }
+
+  .page-section.visible { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── HERO ───────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #1e4a7a 100%);
+    padding: 5rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 40px; right: 60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.10);
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    max-width: 600px;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-title span { color: var(--gold); }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 2.25rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition);
+    letter-spacing: 0.04em;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.88rem;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.35);
+    transition: all var(--transition);
+    letter-spacing: 0.04em;
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Stats strip */
+  .stats-strip {
+    background: var(--white);
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .stat-item {
+    flex: 1;
+    padding: 1.75rem 2rem;
+    border-right: 1px solid rgba(0,0,0,0.06);
+    text-align: center;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--navy);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+  }
+
+  /* ── SECTION STYLING ────────────────────────────── */
+  .section-pad { padding: 4rem 3rem; }
+  .section-pad-sm { padding: 3rem 3rem; }
+
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-desc {
+    font-size: 0.93rem;
+    color: var(--text-mid);
+    max-width: 560px;
+    line-height: 1.75;
+  }
+
+  /* ── SERVICES GRID ──────────────────────────────── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 14px;
+    padding: 1.75rem 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    box-shadow: 0 8px 30px rgba(10,22,40,0.08);
+    transform: translateY(-3px);
+  }
+
+  .service-card:hover::after { transform: scaleX(1); }
+
+  .service-icon-wrap {
+    width: 52px; height: 52px;
+    background: var(--gold-pale);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.1rem;
+  }
+
+  .service-icon-wrap svg { width: 26px; height: 26px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+
+  .service-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .service-desc {
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  .service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--gold);
+    font-weight: 600;
+    margin-top: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── BOARD SECTION ──────────────────────────────── */
+  .board-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .board-card {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .board-card:hover {
+    box-shadow: 0 12px 40px rgba(10,22,40,0.10);
+    transform: translateY(-4px);
+  }
+
+  .board-card-top {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 2rem 1.75rem 1.5rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 1.1rem;
+  }
+
+  .director-avatar {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    background: rgba(201,168,76,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .director-header-info { flex: 1; }
+
+  .director-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+    margin-bottom: 0.2rem;
+  }
+
+  .director-role {
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .board-card-body {
+    padding: 1.4rem 1.75rem 1.5rem;
+  }
+
+  .director-bio {
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 1.1rem;
+  }
+
+  .achievements-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+
+  .achievement-list { list-style: none; }
+
+  .achievement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.79rem;
+    color: var(--text-dark);
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .achievement-item:last-child { border-bottom: none; }
+
+  .achievement-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* ── ABOUT PAGE ─────────────────────────────────── */
+  .about-hero {
+    background: var(--navy);
+    padding: 4rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .about-text .section-title { color: var(--white); }
+  .about-text .section-desc { color: rgba(255,255,255,0.65); }
+
+  .about-pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .pillar-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .pillar-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+  .pillar-name { font-weight: 600; color: var(--gold); font-size: 0.88rem; margin-bottom: 0.3rem; }
+  .pillar-desc { font-size: 0.75rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  .about-body { padding: 3.5rem 3rem; background: var(--off-white); }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin-top: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 2.25rem 1.5rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -5px; top: 4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--white);
+  }
+
+  .timeline-year {
+    font-size: 0.7rem;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-event {
+    font-weight: 600;
+    font-size: 0.93rem;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-detail {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  /* ── CONTACT PAGE ───────────────────────────────── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .contact-form-card {
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.07);
+    padding: 2.25rem;
+  }
+
+  .form-group { margin-bottom: 1.25rem; }
+
+  .form-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+  }
+
+  .form-input {
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color var(--transition);
+    background: var(--off-white);
+  }
+
+  .form-input:focus { border-color: var(--gold); background: var(--white); }
+
+  textarea.form-input { height: 120px; resize: vertical; }
+
+  .contact-info-stack { display: flex; flex-direction: column; gap: 1.1rem; }
+
+  .info-card {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 12px;
+    padding: 1.4rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .info-icon-wrap {
+    width: 40px; height: 40px;
+    background: var(--gold-pale);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .info-icon-wrap svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+
+  .info-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .info-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.5;
+  }
+
+  /* ── BRANCHES ───────────────────────────────────── */
+  .branches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.1rem;
+    margin-top: 2rem;
+  }
+
+  .branch-card {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 12px;
+    padding: 1.4rem;
+    transition: all 0.2s ease;
+  }
+
+  .branch-card:hover { border-color: var(--gold); box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+
+  .branch-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+
+  .branch-addr { font-size: 0.8rem; color: var(--text-mid); line-height: 1.55; margin-bottom: 0.5rem; }
+  .branch-hours { font-size: 0.75rem; color: var(--gold); font-weight: 600; }
+
+  /* ── ANNOUNCEMENT BANNER ────────────────────────── */
+  .announcement {
+    background: var(--gold-pale);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    padding: 0.7rem 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--navy);
+  }
+
+  .announcement-dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 800px) {
+    :root { --sidebar-w: 220px; }
+    .hero { padding: 3rem 1.5rem; }
+    .section-pad { padding: 2.5rem 1.5rem; }
+    .about-hero { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .stats-strip { flex-wrap: wrap; }
+    .stat-item { flex: 1 1 50%; }
+  }
+
+  /* Divider line */
+  .divider { height: 1px; background: rgba(0,0,0,0.07); margin: 0 3rem; }
+
+  /* Highlight box */
+  .highlight-box {
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin: 0 3rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .highlight-text-group { flex: 1; }
+  .highlight-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--white);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .highlight-sub { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+
+  /* ── VMGC PAGE ──────────────────────────────────── */
+  .vmgc-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #1e4a7a 100%);
+    padding: 4rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vmgc-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.12);
+    pointer-events: none;
+  }
+
+  .vmgc-hero .section-title { color: var(--white); margin-bottom: 0.75rem; }
+  .vmgc-hero .section-desc  { color: rgba(255,255,255,0.65); margin: 0 auto; }
+
+  /* Vision & Mission side-by-side cards */
+  .vm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .vm-card {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 16px;
+    padding: 2.25rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .vm-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    box-shadow: 0 10px 36px rgba(10,22,40,0.08);
+    transform: translateY(-3px);
+  }
+
+  .vm-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: var(--gold);
+  }
+
+  .vm-icon-wrap {
+    width: 56px; height: 56px;
+    background: var(--gold-pale);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .vm-icon-wrap svg { width: 28px; height: 28px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+
+  .vm-card-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .vm-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+
+  .vm-card-text {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+
+  /* Goals & Objectives */
+  .goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .goal-card {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 14px;
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+    transition: all 0.3s ease;
+  }
+
+  .goal-card:hover {
+    border-color: rgba(201,168,76,0.35);
+    box-shadow: 0 6px 24px rgba(10,22,40,0.07);
+  }
+
+  .goal-num {
+    width: 42px; height: 42px;
+    background: var(--navy);
+    color: var(--gold);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .goal-body {}
+  .goal-title { font-weight: 700; font-size: 0.95rem; color: var(--navy); margin-bottom: 0.35rem; }
+  .goal-desc  { font-size: 0.81rem; color: var(--text-mid); line-height: 1.65; }
+
+  /* Core Values */
+  .values-section {
+    background: var(--navy);
+    padding: 4rem 3rem;
+  }
+
+  .values-section .section-title { color: var(--white); }
+  .values-section .section-desc  { color: rgba(255,255,255,0.6); }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1.1rem;
+    margin-top: 2.5rem;
+  }
+
+  .value-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 1.75rem 1.4rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .value-card:hover {
+    background: rgba(201,168,76,0.1);
+    border-color: rgba(201,168,76,0.35);
+    transform: translateY(-4px);
+  }
+
+  .value-emoji { font-size: 2rem; margin-bottom: 0.85rem; display: block; }
+
+  .value-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .value-desc {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 800px) {
+    .vm-grid { grid-template-columns: 1fr; }
+    .values-section { padding: 2.5rem 1.5rem; }
+  }
+
+  /* ── CSR PAGE ───────────────────────────────────── */
+  .csr-hero {
+    background: linear-gradient(135deg, #0d3320 0%, #145a32 60%, #1e7a46 100%);
+    padding: 4rem 3rem; text-align: center; position: relative; overflow: hidden;
+  }
+  .csr-hero::before {
+    content: ''; position: absolute; top: -60px; left: 50%;
+    transform: translateX(-50%); width: 500px; height: 500px;
+    border-radius: 50%; border: 1px solid rgba(201,168,76,0.12); pointer-events: none;
+  }
+  .csr-hero .section-title { color: var(--white); margin-bottom: 0.75rem; }
+  .csr-hero .section-desc  { color: rgba(255,255,255,0.7); margin: 0 auto; }
+
+  .csr-pillars {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.4rem; margin-top: 2.5rem;
+  }
+  .csr-card {
+    background: var(--white); border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 16px; overflow: hidden; transition: all 0.3s ease;
+  }
+  .csr-card:hover { box-shadow: 0 10px 36px rgba(10,22,40,0.09); transform: translateY(-3px); border-color: rgba(201,168,76,0.35); }
+  .csr-card-top { padding: 1.75rem 1.75rem 1.25rem; display: flex; align-items: center; gap: 1rem; }
+  .csr-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; }
+  .csr-card-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); }
+  .csr-card-body { padding: 0 1.75rem 1.75rem; }
+  .csr-card-desc { font-size: 0.83rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 1rem; }
+  .csr-stats { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .csr-stat { background: var(--gold-pale); border-radius: 8px; padding: 0.5rem 0.85rem; text-align: center; }
+  .csr-stat-num { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); display: block; }
+  .csr-stat-lbl { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .csr-impact { background: var(--navy); padding: 4rem 3rem; }
+  .csr-impact .section-title { color: var(--white); }
+  .csr-impact .section-desc  { color: rgba(255,255,255,0.6); }
+  .impact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.1rem; margin-top: 2.5rem; }
+  .impact-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.75rem 1rem; text-align: center; transition: all 0.3s ease; }
+  .impact-card:hover { background: rgba(201,168,76,0.12); border-color: rgba(201,168,76,0.35); transform: translateY(-3px); }
+  .impact-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); display: block; margin-bottom: 0.3rem; }
+  .impact-lbl { font-size: 0.75rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+  .sdg-strip { padding: 3rem; background: var(--off-white); }
+  .sdg-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+  .sdg-tag { background: var(--white); border: 1px solid rgba(0,0,0,0.1); border-radius: 100px; padding: 0.45rem 1rem; font-size: 0.78rem; font-weight: 500; color: var(--navy); display: flex; align-items: center; gap: 0.4rem; }
+  .sdg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── FINANCIAL STATEMENTS PAGE ──────────────────── */
+  .fin-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a2d50 60%, #0e2444 100%);
+    padding: 4rem 3rem; text-align: center; position: relative; overflow: hidden;
+  }
+  .fin-hero::before {
+    content: ''; position: absolute; top: -60px; left: 50%;
+    transform: translateX(-50%); width: 500px; height: 500px;
+    border-radius: 50%; border: 1px solid rgba(201,168,76,0.12); pointer-events: none;
+  }
+  .fin-hero .section-title { color: var(--white); margin-bottom: 0.75rem; }
+  .fin-hero .section-desc  { color: rgba(255,255,255,0.65); margin: 0 auto; }
+
+  .fin-kpi-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 1.1rem; margin-top: 2rem; }
+  .fin-kpi { background: var(--white); border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 1.5rem 1.25rem; text-align: center; transition: all 0.25s ease; }
+  .fin-kpi:hover { border-color: rgba(201,168,76,0.4); box-shadow: 0 6px 24px rgba(10,22,40,0.07); }
+  .fin-kpi-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); display: block; }
+  .fin-kpi-lbl { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+  .fin-kpi-badge { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; font-weight: 600; margin-top: 0.4rem; padding: 0.15rem 0.55rem; border-radius: 100px; }
+  .fin-kpi-badge.up   { background: #e6f9f0; color: #1a7a4a; }
+  .fin-kpi-badge.down { background: #fde8e8; color: #c0392b; }
+
+  .fin-tabs { display: flex; gap: 0.4rem; padding: 1.5rem 3rem 0; background: var(--white); border-bottom: 1px solid rgba(0,0,0,0.08); overflow-x: auto; }
+  .fin-tab { padding: 0.65rem 1.2rem; border-radius: 8px 8px 0 0; font-size: 0.83rem; font-weight: 500; color: var(--text-muted); cursor: pointer; border: 1px solid transparent; border-bottom: none; background: transparent; transition: all 0.2s; white-space: nowrap; }
+  .fin-tab:hover { color: var(--navy); background: var(--off-white); }
+  .fin-tab.active { color: var(--navy); background: var(--off-white); border-color: rgba(0,0,0,0.08); font-weight: 600; }
+
+  .fin-content { display: none; }
+  .fin-content.active { display: block; }
+
+  .fin-table-wrap { background: var(--white); border-radius: 14px; border: 1px solid rgba(0,0,0,0.07); overflow: hidden; margin-top: 1.75rem; overflow-x: auto; }
+  .fin-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; min-width: 600px; }
+  .fin-table thead th { background: var(--navy); color: var(--white); padding: 0.9rem 1.1rem; text-align: left; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+  .fin-table thead th:not(:first-child) { text-align: right; }
+  .fin-table tbody tr { border-bottom: 1px solid rgba(0,0,0,0.055); transition: background 0.15s; }
+  .fin-table tbody tr:last-child { border-bottom: none; }
+  .fin-table tbody tr:hover { background: var(--gold-pale); }
+  .fin-table td { padding: 0.7rem 1.1rem; color: var(--text-dark); }
+  .fin-table td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+  .fin-table .row-group td { background: rgba(10,22,40,0.03); font-weight: 700; font-size: 0.72rem; color: var(--navy); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.5rem 1.1rem; }
+  .fin-table .row-total td { font-weight: 700; color: var(--navy); border-top: 2px solid var(--gold); font-size: 0.87rem; }
+  .fin-table .row-sub td { font-weight: 600; color: var(--navy); border-top: 1px solid rgba(0,0,0,0.1); }
+  .pos { color: #1a7a4a; } .neg { color: #c0392b; }
+
+  .fin-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; padding: 0.85rem 1.25rem; background: var(--gold-pale); border-radius: 8px; border-left: 3px solid var(--gold); line-height: 1.6; }
+
+  @media (max-width: 800px) {
+    .csr-hero, .fin-hero { padding: 2.5rem 1.5rem; }
+    .csr-impact, .sdg-strip { padding: 2.5rem 1.5rem; }
+    .fin-tabs { padding: 1rem 1.5rem 0; }
+  }
+</style>
 </head>
 <body>
-  <h1>Welcome to My Bank</h1>
-  <p>This is my first banking website.</p>
 
-  <button>Login</button>
+<!-- ══ SIDEBAR ══════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a class="logo-mark" href="#">
+      <div class="logo-icon">EAR</div>
+      <div class="logo-text">
+        <span class="logo-name">EAR Bank</span>
+        <span class="logo-tagline">Excellence · Assurance · Reliability</span>
+      </div>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a class="nav-item active" onclick="showPage('home', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <a class="nav-item" onclick="showPage('about', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      About EAR Bank
+    </a>
+    <a class="nav-item" onclick="showPage('board', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Board of Directors
+    </a>
+    <a class="nav-item" onclick="showPage('vmgc', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Vision & Mission
+    </a>
+    <a class="nav-item" onclick="showPage('services', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Our Services
+    </a>
+
+    <div class="nav-section-label">Banking</div>
+    <a class="nav-item" onclick="showPage('loans', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Loans & Credit
+    </a>
+    <a class="nav-item" onclick="showPage('investments', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Investments
+    </a>
+    <a class="nav-item" onclick="showPage('branches', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Branches & ATMs
+    </a>
+
+    <div class="nav-section-label">Corporate</div>
+    <a class="nav-item" onclick="showPage('csr', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      CSR
+    </a>
+    <a class="nav-item" onclick="showPage('financials', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Financial Statements
+    </a>
+
+    <div class="nav-section-label">Support</div>
+    <a class="nav-item" onclick="showPage('contact', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.64A2 2 0 012 .82h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91A16 16 0 0015.1 17.91l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Contact Us
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="cta-btn">Open an Account →</button>
+  </div>
+</aside>
+
+<!-- ══ MAIN ══════════════════════════════════════════════ -->
+<div class="main">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="page-title" id="topbar-title">Home</span>
+      <span class="page-crumb">EAR Bank &rsaquo; <span id="topbar-crumb">Overview</span></span>
+    </div>
+    <div class="topbar-right">
+      <div class="hotline">
+        <span class="hotline-label">24/7 Hotline</span>
+        <span class="hotline-num">(63) 9927611564-EAR1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HOME PAGE ══════════════════════════════════════ -->
+  <section class="page-section visible" id="page-home">
+
+    <div class="announcement">
+      <div class="announcement-dot"></div>
+      <strong>New:</strong> EAR Bank Digital Wallet is now available — transfer, pay, and save seamlessly. <a href="#" style="color:var(--gold); margin-left:0.4rem; font-weight:600;">Learn more →</a>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+        Est. 1978 · BSP-Licensed Bank
+      </div>
+      <h1 class="hero-title">Banking Built on <span>Trust, Excellence,</span> and Vision</h1>
+      <p class="hero-sub">EAR Bank has served Filipinos for over four decades — offering smart financial solutions, world-class service, and a commitment to your lasting prosperity.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('services', document.querySelector('.nav-item:nth-child(5)'))">Explore Services</button>
+        <button class="btn-outline" onclick="showPage('about', document.querySelector('.nav-item:nth-child(2)'))">Our Story</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-strip">
+      <div class="stat-item">
+        <span class="stat-num">₱480B+</span>
+        <span class="stat-label">Total Assets</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">3.2M+</span>
+        <span class="stat-label">Active Clients</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">180+</span>
+        <span class="stat-label">Branches Nationwide</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">46 Yrs</span>
+        <span class="stat-label">Trusted Service</span>
+      </div>
+    </div>
+
+    <!-- Services Preview -->
+    <div class="section-pad">
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">Comprehensive Financial Services</h2>
+      <p class="section-desc">From everyday banking to wealth management, EAR Bank provides a full suite of services designed to grow alongside you.</p>
+
+      <div class="services-grid">
+        <!-- Personal Banking -->
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div class="service-name">Personal Banking</div>
+          <div class="service-desc">Savings and checking accounts, debit cards, and everyday banking services tailored to your lifestyle and needs.</div>
+          <div class="service-link">Learn more →</div>
+        </div>
+        <!-- Home Loans -->
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="service-name">Home Loans</div>
+          <div class="service-desc">Competitive rates, flexible terms, and fast approvals to help you own the home of your dreams sooner.</div>
+          <div class="service-link">Learn more →</div>
+        </div>
+        <!-- Business Banking -->
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+          </div>
+          <div class="service-name">Business Banking</div>
+          <div class="service-desc">Cash management, business loans, payroll solutions, and merchant services to power your enterprise.</div>
+          <div class="service-link">Learn more →</div>
+        </div>
+        <!-- Investments -->
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="service-name">Investments & UITF</div>
+          <div class="service-desc">Grow your wealth through unit investment trust funds, stocks, bonds, and structured financial products.</div>
+          <div class="service-link">Learn more →</div>
+        </div>
+        <!-- Digital Banking -->
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <div class="service-name">EAR Digital Banking</div>
+          <div class="service-desc">Bank anytime, anywhere with our award-winning mobile app — transfers, bills, QR payments, and more.</div>
+          <div class="service-link">Learn more →</div>
+        </div>
+        <!-- Insurance -->
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="service-name">Insurance & Protection</div>
+          <div class="service-desc">Life, health, and non-life insurance products to protect you and your family against life's uncertainties.</div>
+          <div class="service-link">Learn more →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Highlight -->
+    <div class="highlight-box">
+      <div class="highlight-text-group">
+        <div class="highlight-title">Ready to open your EAR Bank account?</div>
+        <div class="highlight-sub">It only takes 10 minutes — visit any branch or apply online today.</div>
+      </div>
+      <button class="btn-primary">Get Started →</button>
+    </div>
+
+  </section>
+
+  <!-- ══ ABOUT PAGE ═════════════════════════════════════ -->
+  <section class="page-section" id="page-about">
+    <div class="about-hero">
+      <div class="about-text">
+        <div class="section-label">Who We Are</div>
+        <h2 class="section-title">A Legacy of Excellence Since 1978</h2>
+        <p class="section-desc">EAR Bank was founded with a singular vision: to make world-class banking accessible to every Filipino family and enterprise. Today, we stand as one of the Philippines' most trusted financial institutions.</p>
+      </div>
+      <div class="about-pillars">
+        <div class="pillar-card">
+          <div class="pillar-icon">🏆</div>
+          <div class="pillar-name">Excellence</div>
+          <div class="pillar-desc">Setting the gold standard in every financial solution we deliver.</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🤝</div>
+          <div class="pillar-name">Assurance</div>
+          <div class="pillar-desc">Your assets and trust are protected at every touchpoint.</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">⚡</div>
+          <div class="pillar-name">Reliability</div>
+          <div class="pillar-desc">Consistent service you can count on, day and night.</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🌱</div>
+          <div class="pillar-name">Growth</div>
+          <div class="pillar-desc">Empowering clients to grow wealth with every product.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-body">
+      <div class="section-label">Our Journey</div>
+      <h2 class="section-title">Milestones That Define Us</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">1978</div>
+          <div class="timeline-event">Foundation of EAR Bank</div>
+          <div class="timeline-detail">Established in Manila with ₱50M capitalization and a vision to democratize banking for Filipinos across all economic strata.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">1985</div>
+          <div class="timeline-event">Nationwide Expansion</div>
+          <div class="timeline-detail">Opened 40 new branches across Visayas and Mindanao, reaching underserved communities for the first time.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">1998</div>
+          <div class="timeline-event">BSP Universal Banking License</div>
+          <div class="timeline-detail">Granted full universal banking status, enabling EAR to offer investment banking, trust services, and foreign currency operations.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2008</div>
+          <div class="timeline-event">Navigated the Global Financial Crisis</div>
+          <div class="timeline-detail">Maintained zero depositor loss through the 2008 crisis, reinforcing our reputation for stability and conservative risk management.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2018</div>
+          <div class="timeline-event">Digital Transformation Launch</div>
+          <div class="timeline-detail">Launched EAR Mobile — the most downloaded banking app in the Philippines with over 1M downloads in its first year.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-event">₱480B in Total Assets</div>
+          <div class="timeline-detail">Achieved record total assets exceeding ₱480 billion, serving over 3.2 million active clients nationwide.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ BOARD OF DIRECTORS ════════════════════════════ -->
+  <section class="page-section" id="page-board">
+    <div class="section-pad">
+      <div class="section-label">Leadership</div>
+      <h2 class="section-title">Board of Directors</h2>
+      <p class="section-desc">Our board comprises distinguished leaders from banking, finance, law, and public service — united by a shared commitment to EAR Bank's mission.</p>
+
+      <div class="board-grid">
+
+        <!-- 1 -->
+        <div class="board-card">
+          <div class="board-card-top">
+            <div class="director-avatar">ED</div>
+            <div class="director-header-info">
+              <div class="director-name">Elvin Jay P. Donggo</div>
+              <div class="director-role">Chairman of the Board</div>
+            </div>
+          </div>
+          <div class="board-card-body">
+            <p class="director-bio">A titan of Philippine banking with over 45 years of experience, Elvin Jay founded EAR Bank in 1978 and guided it through every phase of growth and transformation.</p>
+            <div class="achievements-title">Key Achievements</div>
+            <ul class="achievement-list">
+              <li class="achievement-item"><div class="achievement-dot"></div>Founded EAR Bank with ₱50M capital; grew it to ₱480B in assets</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>BSP Outstanding Banker Award (1995, 2003, 2015)</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Steered the bank through two major financial crises without losses</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Presidential Medal of Merit for financial sector contributions</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="board-card">
+          <div class="board-card-top">
+            <div class="director-avatar">AC</div>
+            <div class="director-header-info">
+              <div class="director-name">Artemio Cantungan</div>
+              <div class="director-role">President & CEO</div>
+            </div>
+          </div>
+          <div class="board-card-body">
+            <p class="director-bio">Artemio Cantungan leads EAR Bank's day-to-day operations and strategic direction. Her tenure has been defined by digital innovation and record-breaking profitability.</p>
+            <div class="achievements-title">Key Achievements</div>
+            <ul class="achievement-list">
+              <li class="achievement-item"><div class="achievement-dot"></div>Led EAR Digital transformation, adding 2M users in 4 years</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Asia's 100 Most Powerful Women in Finance — Forbes Asia, 2022</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Increased net income by 40% over five consecutive years</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Harvard Business School, MBA (Distinction)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="board-card">
+          <div class="board-card-top">
+            <div class="director-avatar">RT</div>
+            <div class="director-header-info">
+              <div class="director-name">Reniel Jones Tiomale</div>
+              <div class="director-role">Independent Director</div>
+            </div>
+          </div>
+          <div class="board-card-body">
+            <p class="director-bio">A retired BSP Deputy Governor and renowned monetary economist, Reniel Jones serves as a key independent voice on risk, governance, and regulatory compliance.</p>
+            <div class="achievements-title">Key Achievements</div>
+            <ul class="achievement-list">
+              <li class="achievement-item"><div class="achievement-dot"></div>Former BSP Deputy Governor for Financial Supervision (2005–2016)</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Authored landmark BSP circular on MSME credit access</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>PhD Economics, University of the Philippines (Summa Cum Laude)</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Board seat at IMF Southeast Asia Advisory Council</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="board-card">
+          <div class="board-card-top">
+            <div class="director-avatar">AM</div>
+            <div class="director-header-info">
+              <div class="director-name">Atty. Mike Jason Monte</div>
+              <div class="director-role">Independent Director & Corporate Secretary</div>
+            </div>
+          </div>
+          <div class="board-card-body">
+            <p class="director-bio">With 30 years in corporate and banking law, Mike ensures EAR Bank operates at the highest standard of governance, legal compliance, and shareholder transparency.</p>
+            <div class="achievements-title">Key Achievements</div>
+            <ul class="achievement-list">
+              <li class="achievement-item"><div class="achievement-dot"></div>Top 10, Philippine Bar Examination 1993</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Former SEC Commissioner for Corporate Governance (2010–2018)</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Instrumental in EAR Bank's 2018 corporate governance overhaul</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Ateneo Law School Distinguished Alumni Award, 2020</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="board-card">
+          <div class="board-card-top">
+            <div class="director-avatar">DF</div>
+            <div class="director-header-info">
+              <div class="director-name">Denzy F. Sumbalan</div>
+              <div class="director-role">Non-Executive Director</div>
+            </div>
+          </div>
+          <div class="board-card-body">
+            <p class="director-bio">Denzy brings deep expertise in SME finance and agri-banking, championing EAR Bank's inclusive banking programs that have reached 200,000+ micro-entrepreneurs.</p>
+            <div class="achievements-title">Key Achievements</div>
+            <ul class="achievement-list">
+              <li class="achievement-item"><div class="achievement-dot"></div>Spearheaded EAR Agri-Loan Program serving 50K+ farmers</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>ASEAN Financial Inclusion Award, 2021</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Former ADB Senior Financial Sector Specialist</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>De La Salle University Honorary Doctorate in Business</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="board-card">
+          <div class="board-card-top">
+            <div class="director-avatar">EL</div>
+            <div class="director-header-info">
+              <div class="director-name">Earl Ghian P. Lingcasan</div>
+              <div class="director-role">Non-Executive Director</div>
+            </div>
+          </div>
+          <div class="board-card-body">
+            <p class="director-bio">Earl Ghian leads EAR Bank's ESG and sustainability agenda, integrating environmental and social responsibility into the bank's core lending and investment strategy.</p>
+            <div class="achievements-title">Key Achievements</div>
+            <ul class="achievement-list">
+              <li class="achievement-item"><div class="achievement-dot"></div>Launched EAR Green Bond Program raising ₱12B for clean energy</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Named Philippine ESG Champion of the Year, 2023</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>Former Chief Sustainability Officer, Ayala Corporation</li>
+              <li class="achievement-item"><div class="achievement-dot"></div>London School of Economics, MSc Environmental Policy</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SERVICES PAGE ══════════════════════════════════ -->
+  <section class="page-section" id="page-services">
+    <div class="section-pad">
+      <div class="section-label">Full Product Suite</div>
+      <h2 class="section-title">All Services</h2>
+      <p class="section-desc">Everything you need to bank, save, invest, and protect your future — all under one roof.</p>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+          <div class="service-name">Savings Accounts</div>
+          <div class="service-desc">Regular savings, high-yield savings, and peso/dollar accounts with competitive interest rates and zero maintaining balance options.</div>
+          <div class="service-link">Open Now →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="service-name">Home Loans</div>
+          <div class="service-desc">Purchase, construction, or renovation — enjoy rates as low as 6.25% p.a. with up to 25-year repayment terms.</div>
+          <div class="service-link">Apply Now →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+          <div class="service-name">Personal Loans</div>
+          <div class="service-desc">Fast disbursement personal loans up to ₱2M. No collateral required for qualified borrowers. Same-day approval available.</div>
+          <div class="service-link">Apply Now →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+          <div class="service-name">Business Accounts</div>
+          <div class="service-desc">Current accounts, business savings, and payroll solutions with dedicated relationship managers for every business client.</div>
+          <div class="service-link">Learn More →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="service-name">UITF & Investments</div>
+          <div class="service-desc">Invest in money market, bond, balanced, and equity funds managed by expert fund managers with a 20-year track record.</div>
+          <div class="service-link">Invest Now →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="service-name">Life Insurance</div>
+          <div class="service-desc">Bancassurance products offering life protection, critical illness coverage, and investment-linked insurance plans.</div>
+          <div class="service-link">Get Protected →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <div class="service-name">EAR Mobile App</div>
+          <div class="service-desc">Send money, pay bills, load, invest, and apply for loans — all from your smartphone, available 24/7.</div>
+          <div class="service-link">Download App →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+          <div class="service-name">Forex & Remittance</div>
+          <div class="service-desc">Best foreign exchange rates and OFW remittance services with real-time transfers to any EAR Bank or partner bank account.</div>
+          <div class="service-link">Transfer Now →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ LOANS PAGE ═════════════════════════════════════ -->
+  <section class="page-section" id="page-loans">
+    <div class="section-pad">
+      <div class="section-label">Credit Products</div>
+      <h2 class="section-title">Loans & Credit</h2>
+      <p class="section-desc">Whether you're building a home, growing a business, or managing everyday expenses, EAR Bank has the right credit product for you.</p>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+          <div class="service-name">Home Loan</div>
+          <div class="service-desc">Rates from 6.25% p.a. Up to 80% of property value. Terms up to 25 years. Pre-selling and ready-for-occupancy accepted.</div>
+          <div class="service-link">Apply →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+          <div class="service-name">Credit Card</div>
+          <div class="service-desc">EAR Gold, Platinum, and Elite cards with rebates, air miles, free travel insurance, and zero annual fee for the first year.</div>
+          <div class="service-link">Apply →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+          <div class="service-name">Personal Loan</div>
+          <div class="service-desc">Up to ₱2M, no collateral, same-day approval for qualified clients. Flexible 12–60 month terms at competitive rates.</div>
+          <div class="service-link">Apply →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+          <div class="service-name">Business Loan</div>
+          <div class="service-desc">Working capital, term loans, and SME credit lines up to ₱50M. Agri loans and MSME programs also available.</div>
+          <div class="service-link">Apply →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ INVESTMENTS PAGE ═══════════════════════════════ -->
+  <section class="page-section" id="page-investments">
+    <div class="section-pad">
+      <div class="section-label">Wealth Management</div>
+      <h2 class="section-title">Investments & UITF</h2>
+      <p class="section-desc">Let your money work harder with EAR Bank's range of investment products managed by award-winning fund managers.</p>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="service-name">Money Market UITF</div>
+          <div class="service-desc">Low-risk, high-liquidity fund investing in government securities. Ideal for short-term goals. Min. placement ₱1,000.</div>
+          <div class="service-link">Invest →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
+          <div class="service-name">Bond Fund</div>
+          <div class="service-desc">Invests primarily in government and corporate bonds. Medium risk with stable, consistent returns over 3–5 years.</div>
+          <div class="service-link">Invest →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+          <div class="service-name">Equity Fund</div>
+          <div class="service-desc">Diversified portfolio of PSE-listed stocks targeting long-term capital appreciation. Best for 5+ year investment horizons.</div>
+          <div class="service-link">Invest →</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="service-name">Balanced Fund</div>
+          <div class="service-desc">A mix of stocks and fixed-income securities for moderate risk-takers. Professionally rebalanced quarterly.</div>
+          <div class="service-link">Invest →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ BRANCHES PAGE ══════════════════════════════════ -->
+  <section class="page-section" id="page-branches">
+    <div class="section-pad">
+      <div class="section-label">Network</div>
+      <h2 class="section-title">Branches & ATMs</h2>
+      <p class="section-desc">With 180+ branches and 400+ ATMs nationwide, EAR Bank is always close to you.</p>
+
+      <div class="branches-grid">
+        <div class="branch-card">
+          <div class="branch-name">EAR Bank Head Office</div>
+          <div class="branch-addr">EAR Financial Tower, Bukidnon, Impasug-ong, Poblacion Zone-1</div>
+          <div class="branch-hours">Mon–Fri: 9:00 AM – 4:00 PM</div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name"> BGC Branch</div>
+          <div class="branch-addr">G/F Net Lima Bldg., 5th Ave. cor. 26th St., BGC, Taguig</div>
+          <div class="branch-hours">Mon–Sat: 9:00 AM – 5:00 PM</div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name">Ortigas Branch</div>
+          <div class="branch-addr">G/F ADB Ave., Ortigas Center, Pasig City</div>
+          <div class="branch-hours">Mon–Fri: 9:00 AM – 4:00 PM</div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name">Cebu Branch</div>
+          <div class="branch-addr">Cebu Business Park, Cardinal Rosales Ave., Cebu City</div>
+          <div class="branch-hours">Mon–Fri: 9:00 AM – 4:00 PM</div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name">Davao Branch</div>
+          <div class="branch-addr">CM Recto Ave., Davao City 8000</div>
+          <div class="branch-hours">Mon–Fri: 9:00 AM – 4:00 PM</div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name">Iloilo Branch</div>
+          <div class="branch-addr">Quezon St., Iloilo City 5000</div>
+          <div class="branch-hours">Mon–Fri: 9:00 AM – 4:00 PM</div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name">Clark Branch</div>
+          <div class="branch-addr">Clark Freeport Zone, Pampanga</div>
+          <div class="branch-hours">Mon–Sat: 9:00 AM – 5:00 PM</div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name">SM Mall of Asia Branch</div>
+          <div class="branch-addr">SM Mall of Asia, Pasay City</div>
+          <div class="branch-hours">Daily: 10:00 AM – 8:00 PM</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT PAGE ═══════════════════════════════════ -->
+  <section class="page-section" id="page-contact">
+    <div class="section-pad">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-desc">Our client care specialists are ready to assist you — by phone, email, or in person.</p>
+
+      <div class="contact-grid" style="margin-top: 2.5rem;">
+        <div class="contact-form-card">
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--navy); margin-bottom:1.5rem;">Send us a Message</h3>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" placeholder="Juan dela Cruz" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="juan@example.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-input" placeholder="Account inquiry, loan, etc." />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-input" placeholder="How can we help you?"></textarea>
+          </div>
+          <button class="btn-primary" style="width:100%;">Send Message →</button>
+        </div>
+
+        <div class="contact-info-stack">
+          <div class="info-card">
+            <div class="info-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.64A2 2 0 012 .82h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91A16 16 0 0015.1 17.91l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="info-label">24/7 Customer Hotline</div>
+              <div class="info-value">(63) 9927611564-EAR1<br />(63) 9300240745-3271</div>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="info-label">Email</div>
+              <div class="info-value">customercare@earbank.com.ph<br />corporate@earbank.com.ph</div>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="info-label">Head Office</div>
+              <div class="info-value">EAR Financial Tower<br />Impasug-ong, Poblacion Purok-1</div>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon-wrap">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div>
+              <div class="info-label">Banking Hours</div>
+              <div class="info-value">Mon – Fri: 9:00 AM – 4:00 PM<br />Digital Banking: 24 / 7</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ VISION · MISSION · GOALS · CORE VALUES PAGE ══ -->
+  <section class="page-section" id="page-vmgc">
+
+    <!-- Hero Banner -->
+    <div class="vmgc-hero">
+      <div class="section-label">Our Foundation</div>
+      <h2 class="section-title">Vision, Mission, Goals & Core Values</h2>
+      <p class="section-desc">The principles and aspirations that guide every decision we make at EAR Bank.</p>
+    </div>
+
+    <!-- Vision & Mission -->
+    <div class="section-pad">
+      <div class="section-label">Who We Are</div>
+      <h2 class="section-title">Vision & Mission</h2>
+      <p class="section-desc">Our vision charts where we are headed; our mission defines how we get there — together with every client we serve.</p>
+
+      <div class="vm-grid">
+        <!-- Vision -->
+        <div class="vm-card">
+          <div class="vm-icon-wrap">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 5C7 5 2.73 8.11 1 12.5 2.73 16.89 7 20 12 20s9.27-3.11 11-7.5C21.27 8.11 17 5 12 5z"/></svg>
+          </div>
+          <div class="vm-card-label">Vision</div>
+          <div class="vm-card-title">To be the most trusted bank in the Philippines.</div>
+          <p class="vm-card-text">EAR Bank envisions a future where every Filipino — whether in the heart of Metro Manila or the farthest barangay — has access to world-class financial services built on integrity, innovation, and genuine care. We strive to be the financial institution that Filipinos turn to first, trust completely, and recommend proudly.</p>
+        </div>
+
+        <!-- Mission -->
+        <div class="vm-card">
+          <div class="vm-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="vm-card-label">Mission</div>
+          <div class="vm-card-title">Empowering lives through responsible and inclusive banking.</div>
+          <p class="vm-card-text">We are committed to delivering innovative, accessible, and responsible financial solutions that empower individuals, families, and businesses to achieve their dreams. EAR Bank creates lasting value by building meaningful relationships, upholding the highest standards of integrity, and continuously improving the lives of the communities we serve.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Goals & Objectives -->
+    <div class="section-pad">
+      <div class="section-label">Strategic Direction</div>
+      <h2 class="section-title">Goals & Objectives</h2>
+      <p class="section-desc">Six strategic pillars that translate our vision into measurable outcomes for our clients, partners, and the nation.</p>
+
+      <div class="goals-grid">
+        <div class="goal-card">
+          <div class="goal-num">1</div>
+          <div class="goal-body">
+            <div class="goal-title">Financial Inclusion</div>
+            <div class="goal-desc">Expand access to basic banking, credit, and savings products to underserved communities across Luzon, Visayas, and Mindanao through digital channels and micro-branch expansion.</div>
+          </div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-num">2</div>
+          <div class="goal-body">
+            <div class="goal-title">Customer-First Excellence</div>
+            <div class="goal-desc">Achieve a Net Promoter Score (NPS) of 80+ by 2027 through personalized service, faster transaction processing, and a seamless omnichannel banking experience.</div>
+          </div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-num">3</div>
+          <div class="goal-body">
+            <div class="goal-title">Digital Transformation</div>
+            <div class="goal-desc">Migrate 70% of all transactions to digital platforms by 2026, launching AI-assisted personal finance tools, real-time fraud detection, and open banking APIs.</div>
+          </div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-num">4</div>
+          <div class="goal-body">
+            <div class="goal-title">Sustainable Growth</div>
+            <div class="goal-desc">Grow total assets to ₱500 billion by 2028 while maintaining a capital adequacy ratio above BSP requirements and expanding our loan portfolio responsibly.</div>
+          </div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-num">5</div>
+          <div class="goal-body">
+            <div class="goal-title">Corporate Social Responsibility</div>
+            <div class="goal-desc">Invest ₱2 billion in community development, financial literacy programs, and green financing initiatives supporting the Philippines' sustainable development goals.</div>
+          </div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-num">6</div>
+          <div class="goal-body">
+            <div class="goal-title">Talent & Culture</div>
+            <div class="goal-desc">Develop a future-ready workforce by upskilling 100% of employees in digital competencies, fostering a culture of diversity, equity, and continuous learning by 2026.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core Values (navy background) -->
+    <div class="values-section">
+      <div class="section-label">What We Stand For</div>
+      <h2 class="section-title">Our Core Values</h2>
+      <p class="section-desc">These values are not just words on a wall — they define how our people show up every single day.</p>
+
+      <div class="values-grid">
+        <div class="value-card">
+          <span class="value-emoji">🛡️</span>
+          <div class="value-name">Integrity</div>
+          <div class="value-desc">We do what is right, even when no one is watching. Honesty and transparency are non-negotiable in every transaction and relationship.</div>
+        </div>
+        <div class="value-card">
+          <span class="value-emoji">🤝</span>
+          <div class="value-name">Excellence</div>
+          <div class="value-desc">We hold ourselves to the highest standards, constantly raising the bar in service quality, innovation, and financial expertise.</div>
+        </div>
+        <div class="value-card">
+          <span class="value-emoji">💡</span>
+          <div class="value-name">Assurance</div>
+          <div class="value-desc">Our clients' funds and data are always safe with us. We invest relentlessly in security, compliance, and risk management.</div>
+        </div>
+        <div class="value-card">
+          <span class="value-emoji">🌱</span>
+          <div class="value-name">Reliability</div>
+          <div class="value-desc">We are there for our clients every step of the way — dependable, consistent, and unwavering in our commitment to serve.</div>
+        </div>
+        <div class="value-card">
+          <span class="value-emoji">❤️</span>
+          <div class="value-name">Malasakit</div>
+          <div class="value-desc">We go beyond banking. We genuinely care about the well-being of our clients, employees, and the communities we are privileged to serve.</div>
+        </div>
+        <div class="value-card">
+          <span class="value-emoji">🚀</span>
+          <div class="value-name">Innovation</div>
+          <div class="value-desc">We embrace change and pursue bold ideas that make banking simpler, smarter, and more accessible for every Filipino.</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══ CSR PAGE ══════════════════════════════════════════ -->
+  <section class="page-section" id="page-csr">
+
+    <div class="csr-hero">
+      <div class="section-label">People · Planet · Prosperity</div>
+      <h2 class="section-title">Corporate Social Responsibility</h2>
+      <p class="section-desc">EAR Bank believes banking with purpose creates lasting impact — for our clients, communities, and the generations that follow.</p>
+    </div>
+
+    <div class="section-pad">
+      <div class="section-label">Our Focus Areas</div>
+      <h2 class="section-title">CSR Pillars</h2>
+      <p class="section-desc">Four interconnected pillars guide how EAR Bank gives back and builds forward — responsibly and sustainably.</p>
+      <div class="csr-pillars">
+
+        <div class="csr-pillar-card">
+          <div class="csr-pillar-top">
+            <div class="csr-icon-wrap" style="background:#e8f4fd;">📚</div>
+            <div class="csr-pillar-name">Financial Literacy</div>
+          </div>
+          <div class="csr-pillar-body">
+            <p class="csr-pillar-desc">Free financial education workshops in public schools, barangay halls, and online platforms — equipping Filipinos with the knowledge to save, invest, and grow.</p>
+            <div class="csr-stat-row">
+              <div class="csr-stat"><span class="csr-stat-num">48K+</span><span class="csr-stat-lbl">Beneficiaries</span></div>
+              <div class="csr-stat"><span class="csr-stat-num">320</span><span class="csr-stat-lbl">Workshops</span></div>
+              <div class="csr-stat"><span class="csr-stat-num">71</span><span class="csr-stat-lbl">Cities Reached</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="csr-pillar-card">
+          <div class="csr-pillar-top">
+            <div class="csr-icon-wrap" style="background:#e6f9f0;">🌱</div>
+            <div class="csr-pillar-name">Environmental Sustainability</div>
+          </div>
+          <div class="csr-pillar-body">
+            <p class="csr-pillar-desc">Our Green Banking Initiative funds renewable energy projects, sustainable agriculture loans, and coastal rehabilitation programs to protect the Philippine environment.</p>
+            <div class="csr-stat-row">
+              <div class="csr-stat"><span class="csr-stat-num">₱1.2B</span><span class="csr-stat-lbl">Green Loans</span></div>
+              <div class="csr-stat"><span class="csr-stat-num">15K</span><span class="csr-stat-lbl">Trees Planted</span></div>
+              <div class="csr-stat"><span class="csr-stat-num">40%</span><span class="csr-stat-lbl">Carbon Reduced</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="csr-pillar-card">
+          <div class="csr-pillar-top">
+            <div class="csr-icon-wrap" style="background:#fff5e6;">🏘️</div>
+            <div class="csr-pillar-name">Community Development</div>
+          </div>
+          <div class="csr-pillar-body">
+            <p class="csr-pillar-desc">From community libraries to livelihood cooperatives, EAR Bank actively invests in the social infrastructure that makes communities thrive across the Philippines.</p>
+            <div class="csr-stat-row">
+              <div class="csr-stat"><span class="csr-stat-num">₱580M</span><span class="csr-stat-lbl">Invested</span></div>
+              <div class="csr-stat"><span class="csr-stat-num">142</span><span class="csr-stat-lbl">Projects</span></div>
+              <div class="csr-stat"><span class="csr-stat-num">29</span><span class="csr-stat-lbl">Provinces</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="csr-pillar-card">
+          <div class="csr-pillar-top">
+            <div class="csr-icon-wrap" style="background:#f0eaff;">🤝</div>
+            <div class="csr-pillar-name">Inclusive Employment</div>
+          </div>
+          <div class="csr-pillar-body">
+            <p class="csr-pillar-desc">Championing diversity by partnering with PWD organizations, providing scholarships for deserving youth, and prioritizing hiring from underrepresented communities.</p>
+            <div class="csr-stat-row">
+              <div class="csr-stat"><span class="csr-stat-num">1,200</span><span class="csr-stat-lbl">Scholars</span></div>
+              <div class="csr-stat"><span class="csr-stat-num">18%</span><span class="csr-stat-lbl">PWD Workforce</span></div>
+              <div class="csr-stat"><span class="csr-stat-num">₱85M</span><span class="csr-stat-lbl">Scholarships</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="csr-impact-section">
+      <div class="section-label">2024 Impact Report</div>
+      <h2 class="section-title">Our Impact in Numbers</h2>
+      <p class="section-desc">Measurable outcomes from our ongoing commitment to responsible banking and community development.</p>
+      <div class="impact-grid">
+        <div class="impact-card"><span class="impact-num">₱2.1B</span><span class="impact-label">Total CSR Investment Since Founding</span></div>
+        <div class="impact-card"><span class="impact-num">180K+</span><span class="impact-label">Lives Directly Impacted</span></div>
+        <div class="impact-card"><span class="impact-num">452</span><span class="impact-label">Community Programs Completed</span></div>
+        <div class="impact-card"><span class="impact-num">35</span><span class="impact-label">NGO &amp; Gov't Partnerships</span></div>
+        <div class="impact-card"><span class="impact-num">8</span><span class="impact-label">CSR Awards Received</span></div>
+        <div class="impact-card"><span class="impact-num">100%</span><span class="impact-label">BSP Sustainable Finance Compliant</span></div>
+      </div>
+    </div>
+
+    <div class="csr-sdg-strip">
+      <div class="section-label">Global Alignment</div>
+      <h2 class="section-title">UN Sustainable Development Goals</h2>
+      <p class="section-desc">EAR Bank aligns its CSR programs with the United Nations' 2030 Sustainable Development Goals.</p>
+      <div class="sdg-tags">
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#e5243b;"></span>SDG 1 — No Poverty</span>
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#dda63a;"></span>SDG 2 — Zero Hunger</span>
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#4c9f38;"></span>SDG 3 — Good Health</span>
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#c5192d;"></span>SDG 4 — Quality Education</span>
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#ff3a21;"></span>SDG 8 — Decent Work</span>
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#fd6925;"></span>SDG 10 — Reduced Inequalities</span>
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#3f7e44;"></span>SDG 13 — Climate Action</span>
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#0a97d9;"></span>SDG 14 — Life Below Water</span>
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#56c02b;"></span>SDG 15 — Life on Land</span>
+        <span class="sdg-tag"><span class="sdg-dot" style="background:#19486a;"></span>SDG 17 — Partnerships</span>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ══ FINANCIAL STATEMENTS PAGE ═══════════════════════ -->
+  <section class="page-section" id="page-financials">
+
+    <div class="fin-hero">
+      <div class="section-label">Transparency &amp; Accountability</div>
+      <h2 class="section-title">Financial Statements</h2>
+      <p class="section-desc">EAR Bank's audited four-year financial reports reflect our commitment to transparency, sound governance, and long-term financial strength.</p>
+    </div>
+
+    <!-- KPI Highlights -->
+    <div class="section-pad" style="padding-bottom:0;">
+      <div class="section-label">Key Financial Highlights — FY 2024</div>
+      <h2 class="section-title">Performance at a Glance</h2>
+      <div class="fin-kpi-row">
+        <div class="fin-kpi-card"><span class="fin-kpi-num">₱312B</span><div class="fin-kpi-lbl">Total Assets</div><span class="fin-kpi-change up">▲ 14.2% YoY</span></div>
+        <div class="fin-kpi-card"><span class="fin-kpi-num">₱198B</span><div class="fin-kpi-lbl">Total Deposits</div><span class="fin-kpi-change up">▲ 11.8% YoY</span></div>
+        <div class="fin-kpi-card"><span class="fin-kpi-num">₱21.4B</span><div class="fin-kpi-lbl">Net Income</div><span class="fin-kpi-change up">▲ 18.6% YoY</span></div>
+        <div class="fin-kpi-card"><span class="fin-kpi-num">16.8%</span><div class="fin-kpi-lbl">Capital Adequacy Ratio</div><span class="fin-kpi-change up">▲ Above BSP Min</span></div>
+        <div class="fin-kpi-card"><span class="fin-kpi-num">1.9%</span><div class="fin-kpi-lbl">NPL Ratio</div><span class="fin-kpi-change up">▼ Improved</span></div>
+        <div class="fin-kpi-card"><span class="fin-kpi-num">12.4%</span><div class="fin-kpi-lbl">Return on Equity</div><span class="fin-kpi-change up">▲ 1.1 ppt YoY</span></div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="fin-tabs">
+      <button class="fin-tab active" onclick="switchFinTab('income',this)">Income Statement</button>
+      <button class="fin-tab" onclick="switchFinTab('balance',this)">Balance Sheet</button>
+      <button class="fin-tab" onclick="switchFinTab('cashflow',this)">Cash Flow</button>
+      <button class="fin-tab" onclick="switchFinTab('ratios',this)">Key Ratios</button>
+    </div>
+
+    <div class="section-pad" style="padding-top:2rem;">
+
+      <!-- ── Income Statement (4 years) ── -->
+      <div class="fin-content active" id="fin-income">
+        <div class="fin-table-wrap">
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Item (₱ in Millions)</th>
+                <th>FY 2024</th><th>FY 2023</th><th>FY 2022</th><th>FY 2021</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-group"><td colspan="5">Interest Income</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Loans &amp; Receivables</td><td>28,410</td><td>23,870</td><td>20,140</td><td>16,920</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Investment Securities</td><td>6,820</td><td>5,990</td><td>5,310</td><td>4,680</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Interbank Placements</td><td>1,240</td><td>980</td><td>710</td><td>530</td></tr>
+              <tr class="row-subtotal"><td>Total Interest Income</td><td>36,470</td><td>30,840</td><td>26,160</td><td>22,130</td></tr>
+              <tr class="row-group"><td colspan="5">Interest Expense</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Deposits</td><td>(9,810)</td><td>(8,420)</td><td>(6,980)</td><td>(5,810)</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Borrowings</td><td>(2,340)</td><td>(1,990)</td><td>(1,650)</td><td>(1,320)</td></tr>
+              <tr class="row-subtotal"><td>Net Interest Income</td><td>24,320</td><td>20,430</td><td>17,530</td><td>15,000</td></tr>
+              <tr class="row-group"><td colspan="5">Non-Interest Income</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Service Charges &amp; Fees</td><td>3,180</td><td>2,740</td><td>2,320</td><td>1,940</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Foreign Exchange Gains</td><td>1,450</td><td>1,110</td><td>890</td><td>720</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Trust &amp; Investment Fees</td><td>920</td><td>780</td><td>640</td><td>490</td></tr>
+              <tr class="row-subtotal"><td>Total Operating Income</td><td>29,870</td><td>25,060</td><td>21,380</td><td>18,150</td></tr>
+              <tr class="row-group"><td colspan="5">Operating Expenses</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Personnel Costs</td><td>(5,640)</td><td>(4,920)</td><td>(4,310)</td><td>(3,760)</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Occupancy &amp; Equipment</td><td>(1,820)</td><td>(1,640)</td><td>(1,490)</td><td>(1,310)</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Provision for Credit Losses</td><td>(1,210)</td><td>(1,380)</td><td>(1,540)</td><td>(1,820)</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Other Operating Expenses</td><td>(2,310)</td><td>(2,010)</td><td>(1,780)</td><td>(1,530)</td></tr>
+              <tr class="row-subtotal"><td>Total Operating Expenses</td><td>(10,980)</td><td>(9,950)</td><td>(9,120)</td><td>(8,420)</td></tr>
+              <tr class="row-total"><td>Net Income Before Tax</td><td>18,890</td><td>15,110</td><td>12,260</td><td>9,730</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Income Tax Expense</td><td>(4,790)</td><td>(3,230)</td><td>(2,640)</td><td>(2,100)</td></tr>
+              <tr class="row-total"><td><strong>Net Income After Tax</strong></td><td><strong class="positive">21,400</strong></td><td><strong class="positive">18,020</strong></td><td><strong class="positive">14,880</strong></td><td><strong class="positive">11,960</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fin-note">All figures in Philippine Peso (₱), in millions. FY 2024 figures are audited by an independent external auditor accredited by the Bangko Sentral ng Pilipinas (BSP). FY 2021–2023 figures are restated for comparative purposes.</p>
+      </div>
+
+      <!-- ── Balance Sheet (4 years) ── -->
+      <div class="fin-content" id="fin-balance">
+        <div class="fin-table-wrap">
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Item (₱ in Millions)</th>
+                <th>Dec 2024</th><th>Dec 2023</th><th>Dec 2022</th><th>Dec 2021</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-group"><td colspan="5">Assets</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Cash &amp; Cash Equivalents</td><td>24,810</td><td>21,340</td><td>18,650</td><td>15,920</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Investment Securities</td><td>68,420</td><td>59,870</td><td>52,310</td><td>44,780</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Loans &amp; Receivables (net)</td><td>182,640</td><td>155,980</td><td>130,420</td><td>108,310</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Bank Premises &amp; Equipment</td><td>12,340</td><td>11,890</td><td>11,210</td><td>10,540</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Other Assets</td><td>23,790</td><td>19,920</td><td>16,440</td><td>13,290</td></tr>
+              <tr class="row-total"><td><strong>Total Assets</strong></td><td><strong>312,000</strong></td><td><strong>269,000</strong></td><td><strong>229,030</strong></td><td><strong>192,840</strong></td></tr>
+              <tr class="row-group"><td colspan="5">Liabilities</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Deposits</td><td>198,300</td><td>177,410</td><td>153,240</td><td>128,650</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Bills Payable &amp; Borrowings</td><td>42,180</td><td>35,640</td><td>29,870</td><td>24,110</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Other Liabilities</td><td>18,940</td><td>15,320</td><td>13,180</td><td>10,840</td></tr>
+              <tr class="row-subtotal"><td>Total Liabilities</td><td>259,420</td><td>228,370</td><td>196,290</td><td>163,600</td></tr>
+              <tr class="row-group"><td colspan="5">Equity</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Common Stock</td><td>20,000</td><td>20,000</td><td>20,000</td><td>20,000</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Retained Earnings</td><td>28,940</td><td>18,240</td><td>10,940</td><td>7,140</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Other Comprehensive Income</td><td>3,640</td><td>2,390</td><td>1,800</td><td>2,100</td></tr>
+              <tr class="row-subtotal"><td>Total Equity</td><td class="positive">52,580</td><td class="positive">40,630</td><td class="positive">32,740</td><td class="positive">29,240</td></tr>
+              <tr class="row-total"><td><strong>Total Liabilities &amp; Equity</strong></td><td><strong>312,000</strong></td><td><strong>269,000</strong></td><td><strong>229,030</strong></td><td><strong>192,840</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fin-note">Balance sheet figures as of December 31 of each fiscal year. Prepared in accordance with Philippine Financial Reporting Standards (PFRS) and BSP regulatory requirements.</p>
+      </div>
+
+      <!-- ── Cash Flow (4 years) ── -->
+      <div class="fin-content" id="fin-cashflow">
+        <div class="fin-table-wrap">
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Item (₱ in Millions)</th>
+                <th>FY 2024</th><th>FY 2023</th><th>FY 2022</th><th>FY 2021</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-group"><td colspan="5">Operating Activities</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Net Income</td><td>21,400</td><td>18,020</td><td>14,880</td><td>11,960</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Adjustments for Non-Cash Items</td><td>3,210</td><td>2,840</td><td>2,450</td><td>2,080</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Changes in Operating Assets/Liabilities</td><td>(8,640)</td><td>(7,120)</td><td>(5,980)</td><td>(4,830)</td></tr>
+              <tr class="row-subtotal"><td>Net Cash from Operations</td><td class="positive">15,970</td><td class="positive">13,740</td><td class="positive">11,350</td><td class="positive">9,210</td></tr>
+              <tr class="row-group"><td colspan="5">Investing Activities</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Net (Increase)/Decrease in Loans</td><td>(26,660)</td><td>(25,560)</td><td>(20,340)</td><td>(16,820)</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Purchase of Investment Securities</td><td>(12,380)</td><td>(10,640)</td><td>(8,920)</td><td>(7,140)</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Capital Expenditure</td><td>(1,840)</td><td>(1,590)</td><td>(1,310)</td><td>(1,080)</td></tr>
+              <tr class="row-subtotal"><td>Net Cash from Investing</td><td class="negative">(40,880)</td><td class="negative">(37,790)</td><td class="negative">(30,570)</td><td class="negative">(25,040)</td></tr>
+              <tr class="row-group"><td colspan="5">Financing Activities</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Net Increase in Deposits</td><td>20,890</td><td>24,170</td><td>18,460</td><td>14,380</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Net Borrowings</td><td>6,540</td><td>5,770</td><td>4,210</td><td>3,180</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Dividends Paid</td><td>(3,050)</td><td>(2,580)</td><td>(2,010)</td><td>(1,640)</td></tr>
+              <tr class="row-subtotal"><td>Net Cash from Financing</td><td class="positive">24,380</td><td class="positive">27,360</td><td class="positive">20,660</td><td class="positive">15,920</td></tr>
+              <tr class="row-total"><td><strong>Net Change in Cash</strong></td><td><strong class="positive">3,470</strong></td><td><strong class="positive">3,310</strong></td><td><strong class="positive">1,440</strong></td><td><strong class="positive">90</strong></td></tr>
+              <tr><td>Cash at Beginning of Year</td><td>21,340</td><td>18,030</td><td>16,590</td><td>16,500</td></tr>
+              <tr class="row-total"><td><strong>Cash at End of Year</strong></td><td><strong>24,810</strong></td><td><strong>21,340</strong></td><td><strong>18,030</strong></td><td><strong>16,590</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fin-note">Prepared using the indirect method in accordance with PAS 7 (Statement of Cash Flows).</p>
+      </div>
+
+      <!-- ── Key Ratios (4 years) ── -->
+      <div class="fin-content" id="fin-ratios">
+        <div class="fin-table-wrap">
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th>Financial Ratio</th>
+                <th>FY 2024</th><th>FY 2023</th><th>FY 2022</th><th>FY 2021</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-group"><td colspan="5">Profitability</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Return on Assets (ROA)</td><td class="positive">6.86%</td><td class="positive">6.70%</td><td class="positive">6.50%</td><td class="positive">6.20%</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Return on Equity (ROE)</td><td class="positive">12.40%</td><td class="positive">11.30%</td><td class="positive">10.10%</td><td class="positive">9.20%</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Net Interest Margin (NIM)</td><td class="positive">7.80%</td><td class="positive">7.59%</td><td class="positive">7.35%</td><td class="positive">7.10%</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Cost-to-Income Ratio</td><td>36.8%</td><td>39.7%</td><td>42.7%</td><td>46.4%</td></tr>
+              <tr class="row-group"><td colspan="5">Capital Adequacy</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Capital Adequacy Ratio (CAR)</td><td class="positive">16.8%</td><td class="positive">15.9%</td><td class="positive">14.7%</td><td class="positive">13.8%</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Tier 1 Capital Ratio</td><td class="positive">14.2%</td><td class="positive">13.4%</td><td class="positive">12.3%</td><td class="positive">11.6%</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;BSP Minimum CAR</td><td>10.0%</td><td>10.0%</td><td>10.0%</td><td>10.0%</td></tr>
+              <tr class="row-group"><td colspan="5">Asset Quality</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Non-Performing Loan (NPL) Ratio</td><td class="positive">1.90%</td><td>2.30%</td><td>2.80%</td><td>3.40%</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;NPL Coverage Ratio</td><td class="positive">142%</td><td class="positive">128%</td><td class="positive">115%</td><td class="positive">104%</td></tr>
+              <tr class="row-group"><td colspan="5">Liquidity</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Liquidity Coverage Ratio (LCR)</td><td class="positive">186%</td><td class="positive">174%</td><td class="positive">161%</td><td class="positive">148%</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Loan-to-Deposit Ratio</td><td>92.1%</td><td>87.9%</td><td>85.1%</td><td>84.2%</td></tr>
+              <tr><td>&nbsp;&nbsp;&nbsp;Deposit-to-Asset Ratio</td><td>63.6%</td><td>65.9%</td><td>66.9%</td><td>66.7%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fin-note">Ratios computed in accordance with BSP Circular No. 980 and applicable Philippine banking regulations. CAR is computed on a solo basis. All ratios are unaudited for comparative years unless otherwise stated.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+</div><!-- end .main -->
+
+<script>
+  const pageMap = {
+    home: { title: 'Home', crumb: 'Overview' },
+    about: { title: 'About EAR Bank', crumb: 'Our Story' },
+    board: { title: 'Board of Directors', crumb: 'Leadership' },
+    services: { title: 'Our Services', crumb: 'All Products' },
+    loans: { title: 'Loans & Credit', crumb: 'Credit Products' },
+    investments: { title: 'Investments', crumb: 'Wealth Management' },
+    branches: { title: 'Branches & ATMs', crumb: 'Our Network' },
+    contact: { title: 'Contact Us', crumb: 'Get in Touch' },
+    vmgc: { title: 'Vision, Mission & Core Values', crumb: 'Our Foundation' },
+    csr: { title: 'Corporate Social Responsibility', crumb: 'Community & Sustainability' },
+    financials: { title: 'Financial Statements', crumb: 'Transparency & Reporting' },
+  };
+
+  function showPage(key, navEl) {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+    const section = document.getElementById('page-' + key);
+    if (section) section.classList.add('visible');
+    if (navEl) navEl.classList.add('active');
+
+    const meta = pageMap[key] || { title: key, crumb: key };
+    document.getElementById('topbar-title').textContent = meta.title;
+    document.getElementById('topbar-crumb').textContent = meta.crumb;
+
+    window.scrollTo(0, 0);
+  }
+  function switchFinTab(id, btn) {
+    document.querySelectorAll('.fin-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.fin-tab').forEach(t => t.classList.remove('active'));
+    const el = document.getElementById('fin-' + id);
+    if (el) el.classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+</script>
 </body>
 </html>
